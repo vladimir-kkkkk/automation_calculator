@@ -1,0 +1,428 @@
+<!DOCTYPE html><html lang="ru"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Калькулятор автоматизации</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+html,body{margin:0;padding:20px;background:#F7F9F6;font-family:'Inter',sans-serif;overflow-x:hidden}
+.header-img{display:block;width:calc(100% + 40px);margin:-40px -20px 20px;height:auto;transform:scale(1.15);transform-origin:center top}
+.wrapper{width:100%;overflow:hidden;position:relative;box-sizing:border-box;margin-top:100px}
+.box{position:relative;width:1300px;height:2291px;transform-origin:top left}
+.group{position:relative;width:100%;height:100%}
+.group>*{position:absolute;color:#67a9d8;font:500 56px/normal 'Inter';letter-spacing:0}
+.text-wrapper{font-size:61px;top:0}
+.div{top:380px}
+.text-wrapper-5{top:774px}
+.text-wrapper-2{top:990px}
+.p{top:1340px;left:1px}
+.text-wrapper-4{top:1184px;left:385px;text-align:center;width:220px}
+.text-wrapper-3{top:1830px;left:31px;text-align:center}
+.rectangle,.rectangle-2,.rectangle-3,.rectangle-4,.rectangle-5,.rectangle-6,.rectangle-7,.rectangle-8{position:absolute;border:5px solid rgba(69,162,227,0.64);border-radius:40px;background:rgba(255,255,255,0.64);display:flex;align-items:center;justify-content:center}
+input[type="number"],.time-select,.task-input{width:100%;border:none;background:transparent;font:500 48px 'Inter';color:#67a9d8;text-align:center;outline:none;-moz-appearance:textfield;line-height:1;padding:0}
+.task-input{padding:0 40px}
+.result-display{width:100%;height:100%;display:flex;align-items:center;justify-content:center;gap:8px;font:500 44px 'Inter';color:#67a9d8;flex-wrap:wrap;padding:0 20px}
+.result-value,.result-unit{font:500 44px 'Inter';color:#67a9d8}
+input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+input[type="number"]::placeholder{color:#67a9d8;opacity:1}
+.time-select{cursor:pointer;appearance:none;font-family:'Inter',sans-serif;font-weight:500;font-size:48px;text-align-last:center}
+.time-select option{background:#67a9d8;color:#fff;text-align:center;font-family:'Inter',sans-serif;font-weight:500;font-size:48px}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .time-select{-webkit-appearance:none}
+  .time-select:focus{outline:none}
+}
+.custom-select{position:relative;width:100%;height:100%;cursor:pointer}
+.custom-select-display{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font:500 48px 'Inter';color:#67a9d8}
+.custom-dropdown{position:absolute;top:707px;left:421px;width:494px;background:#F7F9F6;border:5px solid #67a9d8;border-radius:30px;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s;z-index:1000;box-shadow:0 8px 20px rgba(0,0,0,.15);padding:10px 0}
+.custom-dropdown.active{opacity:1;visibility:visible}
+.custom-option{padding:20px 15px;text-align:center;color:#67a9d8;font:500 48px 'Inter';background:#F7F9F6;line-height:1.2}
+.custom-option:hover{background:#67a9d8;color:#F7F9F6}
+.rectangle{top:146px;left:5px;width:1280px;height:162px;border-width:4.33px;border-radius:34.6px}
+.rectangle-2{top:514px;width:371px;height:188px}
+.rectangle-8{position:relative;top:514px;left:421px;width:494px;height:188px}
+.rectangle-3{top:1130px;width:371px;height:188px}
+.rectangle-7{top:1130px;left:613px;width:523px;height:188px}
+.rectangle-6{top:1530px;left:1px;width:371px;height:188px}
+.rectangle-4{top:1530px;left:422px;width:494px;height:188px}
+.rectangle-5{top:2098px;left:205px;width:896px;height:188px}
+.img,.line{position:absolute;width:1280px;height:10px;background:#67a9d8;opacity:.3}
+.img{top:908px;left:1px}.line{top:1808px;left:5px}
+</style></head><body>
+<img src="https://s1.hostingkartinok.com/uploads/images/2025/06/b50a2c08fbebe4431c9f0dcda537cf64.jpg" alt="" class="header-img">
+<div class="wrapper">
+  <div class="box" id="box">
+    <div class="group">
+      <div class="text-wrapper">Задача</div>
+      <div class="div">Это сэкономит мне</div>
+      <div class="text-wrapper-5">За каждое использование</div>
+      <div class="text-wrapper-2">Я буду использовать автоматизацию</div>
+      <p class="p">Автоматизация будет полезна в течение</p>
+      <p class="text-wrapper-3">Чтобы автоматизация была рентабельной, я<br>могу потратить на неё НЕ более</p>
+      <div class="text-wrapper-4">раз в</div>
+      <div class="rectangle"><input type="text" class="task-input"></div><div class="rectangle-2"><input type="number" min="0" step="1" value=""></div><div class="rectangle-8">
+        <div class="custom-select" id="timeSelect">
+          <div class="custom-select-display">секунд</div>
+        </div>
+      </div>
+      <div class="custom-dropdown" id="timeDropdown">
+        <div class="custom-option" data-value="seconds">секунд</div>
+        <div class="custom-option" data-value="minutes">минут</div>
+        <div class="custom-option" data-value="hours">часов</div>
+        <div class="custom-option" data-value="days">дней</div>
+      </div>
+      <div class="rectangle-3"><input type="number" min="0" step="1" value=""></div><div class="rectangle-7">
+        <div class="custom-select" id="frequencySelect">
+          <div class="custom-select-display">день</div>
+        </div>
+      </div>
+      <div class="custom-dropdown" id="frequencyDropdown" style="top:1323px;left:613px;width:523px;">
+        <div class="custom-option" data-value="hours">час</div>
+        <div class="custom-option" data-value="days">день</div>
+        <div class="custom-option" data-value="weeks">неделю</div>
+        <div class="custom-option" data-value="months">месяц</div>
+        <div class="custom-option" data-value="years">год</div>
+      </div>
+      <div class="rectangle-6"><input type="number" min="0" step="1" value=""></div><div class="rectangle-4">
+        <div class="custom-select" id="durationSelect">
+          <div class="custom-select-display">дней</div>
+        </div>
+      </div>
+      <div class="custom-dropdown" id="durationDropdown" style="top:1723px;left:422px;width:494px;">
+        <div class="custom-option" data-value="hours">часов</div>
+        <div class="custom-option" data-value="days">дней</div>
+        <div class="custom-option" data-value="weeks">недель</div>
+        <div class="custom-option" data-value="months">месяцев</div>
+        <div class="custom-option" data-value="years">лет</div>
+      </div>
+      <div class="rectangle-5">
+        <div class="result-display">
+          <span class="result-value">0</span>
+          <span class="result-unit">минут</span>
+        </div>
+      </div>
+      <div class="img"></div><div class="line"></div>
+    </div>
+  </div>
+</div>
+<script>
+(()=>{
+// Масштабирование
+const b=document.getElementById('box'),w=document.querySelector('.wrapper'),W=1300,H=2291,G=6;
+function f(){
+  const s=getComputedStyle(document.body),
+        fw=document.body.clientWidth-parseFloat(s.paddingLeft)-parseFloat(s.paddingRight),
+        a=Math.max(0,fw-2*G),
+        k=Math.min(1,a/W),
+        dx=(a-W*k)/2;
+  b.style.transform=`translateX(${dx}px) scale(${k})`;
+  w.style.padding=`0 ${G}px ${G}px`;
+  w.style.height=`${H*k+G}px`;
+}
+f();
+addEventListener('resize',f);
+
+// Валидация числовых полей
+const numInputs=document.querySelectorAll('input[type="number"]');
+numInputs.forEach(input=>{
+  input.addEventListener('keypress',(e)=>{if(!/[0-9]/.test(e.key)){e.preventDefault();}});
+  input.addEventListener('paste',(e)=>{
+    e.preventDefault();
+    const paste=(e.clipboardData||window.clipboardData).getData('text');
+    if(/^\d+$/.test(paste)){input.value=paste;}
+  });
+});
+
+// Словари склонений
+const timeUnits={
+  seconds:['секунду','секунды','секунд'],
+  minutes:['минуту','минуты','минут'],
+  hours:['час','часа','часов'],
+  days:['день','дня','дней']
+};
+const durationUnits={
+  hours:['час','часа','часов'],
+  days:['день','дня','дней'],
+  weeks:['неделя','недели','недель'],
+  months:['месяц','месяца','месяцев'],
+  years:['год','года','лет']
+};
+const durationUnitsGenitive={
+  hours:['часа','часов','часов'],
+  days:['дня','дней','дней'],
+  weeks:['недели','недель','недель'],
+  months:['месяца','месяцев','месяцев'],
+  years:['года','лет','лет']
+};
+const frequencyUnits={
+  hours:'час',
+  days:'день',
+  weeks:'неделю',
+  months:'месяц',
+  years:'год'
+};
+
+// Функция склонения
+function getPlural(n,forms){
+  const n10=n%10,n100=n%100;
+  if(n10===1&&n100!==11)return forms[0];
+  if(n10>=2&&n10<=4&&(n100<10||n100>=20))return forms[1];
+  return forms[2];
+}
+
+function getRazWord(n){return getPlural(n,['раз','раза','раз']);}
+
+// Функции обновления единиц измерения
+function updateTimeUnit(input,display,unitType){
+  const value=parseInt(input.value);
+  const forms=timeUnits[unitType];
+  if(forms){
+    if(isNaN(value)||value===0||input.value===''){
+      display.textContent=forms[2];
+    }else{
+      display.textContent=getPlural(value,forms);
+    }
+  }
+}
+
+function updateDurationUnit(input,display,unitType){
+  const value=parseInt(input.value);
+  if(isNaN(value)||value===0||input.value===''){
+    const forms=durationUnits[unitType];
+    if(forms)display.textContent=forms[2];
+  }else{
+    const forms=durationUnitsGenitive[unitType];
+    if(forms)display.textContent=getPlural(value,forms);
+  }
+}
+
+function updateFrequencyUnit(display,unitType){
+  const unit=frequencyUnits[unitType];
+  if(unit)display.textContent=unit;
+}
+
+function updateRazText(){
+  const input=document.querySelector('.rectangle-3 input');
+  const value=parseInt(input.value);
+  const razText=document.querySelector('.text-wrapper-4');
+  if(isNaN(value)||value===0||input.value===''){
+    razText.textContent='раз в';
+  }else{
+    razText.textContent=getRazWord(value)+' в';
+  }
+}
+
+// Dropdown для времени
+const customSelect=document.getElementById('timeSelect');
+const display=customSelect.querySelector('.custom-select-display');
+const dropdown=document.getElementById('timeDropdown');
+let currentTimeUnit='seconds';
+
+customSelect.addEventListener('click',(e)=>{
+  e.stopPropagation();
+  dropdown.classList.toggle('active');
+});
+
+dropdown.querySelectorAll('.custom-option').forEach(option=>{
+  option.addEventListener('click',(e)=>{
+    e.stopPropagation();
+    display.textContent=option.textContent;
+    dropdown.classList.remove('active');
+    currentTimeUnit=option.dataset.value;
+    const timeInput=document.querySelector('.rectangle-2 input');
+    updateTimeUnit(timeInput,display,currentTimeUnit);
+    calculateAutomation();
+  });
+});
+
+// Dropdown для длительности
+const durationSelect=document.getElementById('durationSelect');
+const durationDisplay=durationSelect.querySelector('.custom-select-display');
+const durationDropdown=document.getElementById('durationDropdown');
+let currentDurationUnit='days';
+
+durationSelect.addEventListener('click',(e)=>{
+  e.stopPropagation();
+  durationDropdown.classList.toggle('active');
+});
+
+durationDropdown.querySelectorAll('.custom-option').forEach(option=>{
+  option.addEventListener('click',(e)=>{
+    e.stopPropagation();
+    durationDropdown.classList.remove('active');
+    currentDurationUnit=option.dataset.value;
+    const durationInput=document.querySelector('.rectangle-6 input');
+    updateDurationUnit(durationInput,durationDisplay,currentDurationUnit);
+    calculateAutomation();
+  });
+});
+
+// Dropdown для частоты
+const frequencySelect=document.getElementById('frequencySelect');
+const frequencyDisplay=frequencySelect.querySelector('.custom-select-display');
+const frequencyDropdown=document.getElementById('frequencyDropdown');
+let currentFrequencyUnit='days';
+
+frequencySelect.addEventListener('click',(e)=>{
+  e.stopPropagation();
+  frequencyDropdown.classList.toggle('active');
+});
+
+frequencyDropdown.querySelectorAll('.custom-option').forEach(option=>{
+  option.addEventListener('click',(e)=>{
+    e.stopPropagation();
+    frequencyDisplay.textContent=option.textContent;
+    frequencyDropdown.classList.remove('active');
+    currentFrequencyUnit=option.dataset.value;
+    updateFrequencyUnit(frequencyDisplay,currentFrequencyUnit);
+    calculateAutomation();
+  });
+});
+
+// Закрытие dropdowns при клике вне
+document.addEventListener('click',()=>{
+  dropdown.classList.remove('active');
+  durationDropdown.classList.remove('active');
+  frequencyDropdown.classList.remove('active');
+});
+
+// Инициализация полей
+const timeInput=document.querySelector('.rectangle-2 input');
+const durationInput=document.querySelector('.rectangle-6 input');
+const frequencyInput=document.querySelector('.rectangle-3 input');
+
+timeInput.addEventListener('input',()=>{
+  updateTimeUnit(timeInput,display,currentTimeUnit);
+  calculateAutomation();
+});
+
+durationInput.addEventListener('input',()=>{
+  updateDurationUnit(durationInput,durationDisplay,currentDurationUnit);
+  calculateAutomation();
+});
+
+frequencyInput.addEventListener('input',()=>{
+  updateRazText();
+  calculateAutomation();
+});
+
+// Конвертация в секунды
+const toSeconds={
+  seconds:1,
+  minutes:60,
+  hours:3600,
+  days:86400,
+  weeks:604800,
+  months:2592000,
+  years:31536000
+};
+
+// Коэффициенты для перевода частоты в год
+const frequencyToYear={
+  hours:8760,
+  days:365,
+  weeks:52,
+  months:12,
+  years:1
+};
+
+// Функция расчета автоматизации
+function calculateAutomation(){
+  const timeValue=parseInt(timeInput.value)||0;
+  const frequencyValue=parseInt(frequencyInput.value)||0;
+  const durationValue=parseInt(durationInput.value)||0;
+  
+  if(timeValue===0||frequencyValue===0||durationValue===0){
+    const resultDisplay=document.querySelector('.result-display');
+    resultDisplay.innerHTML='<span class="result-value">0</span> <span class="result-unit">минут</span>';
+    return;
+  }
+  
+  // Переводим сэкономленное время в секунды
+  const savedTimeInSeconds=timeValue*toSeconds[currentTimeUnit];
+  
+  // Рассчитываем экономию времени за год в секундах
+  const yearlyFrequency=frequencyValue*frequencyToYear[currentFrequencyUnit];
+  const yearlySavingsInSeconds=savedTimeInSeconds*yearlyFrequency;
+  
+  // Переводим длительность использования в секунды
+  const durationInSeconds=durationValue*toSeconds[currentDurationUnit];
+  const durationInYears=durationInSeconds/toSeconds.years;
+  
+  // Рассчитываем общую экономию за весь период
+  const totalSavingsInSeconds=yearlySavingsInSeconds*durationInYears;
+  
+  // Определяем оптимальную единицу измерения для отображения
+  let resultValue,resultUnit;
+  if(totalSavingsInSeconds<86400){
+    // Для времени меньше суток всегда используем минуты (без округления для точности)
+    resultValue=totalSavingsInSeconds/60;
+    resultUnit='минут';
+  }else if(totalSavingsInSeconds<604800){
+    resultValue=totalSavingsInSeconds/86400;
+    resultUnit='дней';
+  }else if(totalSavingsInSeconds<2592000){
+    resultValue=totalSavingsInSeconds/604800;
+    resultUnit='недель';
+  }else if(totalSavingsInSeconds<31536000){
+    resultValue=totalSavingsInSeconds/2592000;
+    resultUnit='месяцев';
+  }else{
+    resultValue=totalSavingsInSeconds/31536000;
+    resultUnit='лет';
+  }
+  
+  updateResult(resultValue,resultUnit);
+}
+
+// Функция обновления результата
+function updateResult(value,unit){
+  const resultDisplay=document.querySelector('.result-display');
+  
+  // Для времени меньше суток показываем в формате часов и минут
+  if(unit==='минут'){
+    // Сохраняем точность без округления
+    const totalMinutes=value;
+    const hours=Math.floor(totalMinutes/60);
+    const minutes=Math.floor(totalMinutes%60);
+    
+    if(hours>0){
+      const hoursText=hours+' '+getPlural(hours,['час','часа','часов']);
+      if(minutes>0){
+        const minutesText=minutes+' '+getPlural(minutes,['минута','минуты','минут']);
+        resultDisplay.innerHTML=`<span class="result-value">${hoursText} ${minutesText}</span>`;
+      }else{
+        resultDisplay.innerHTML=`<span class="result-value">${hoursText}</span>`;
+      }
+    }else{
+      // Если меньше часа, показываем только минуты
+      const floorMinutes=Math.floor(value);
+      if(floorMinutes===0&&value>0){
+        // Если меньше минуты, показываем "менее 1 минуты"
+        resultDisplay.innerHTML='<span class="result-value">менее 1 минуты</span>';
+      }else{
+        resultDisplay.innerHTML=`<span class="result-value">${floorMinutes}</span> <span class="result-unit">${getPlural(floorMinutes,['минута','минуты','минут'])}</span>`;
+      }
+    }
+  }else{
+    // Для дней, недель, месяцев, лет
+    const unitForms={
+      'дней':['день','дня','дней'],
+      'недель':['неделя','недели','недель'],
+      'месяцев':['месяц','месяца','месяцев'],
+      'лет':['год','года','лет']
+    };
+    
+    const displayValue=Math.floor(value);
+    const displayUnit=unitForms[unit]?getPlural(displayValue,unitForms[unit]):unit;
+    resultDisplay.innerHTML=`<span class="result-value">${displayValue}</span> <span class="result-unit">${displayUnit}</span>`;
+  }
+}
+
+// Инициализация
+updateTimeUnit(timeInput,display,currentTimeUnit);
+updateDurationUnit(durationInput,durationDisplay,currentDurationUnit);
+updateFrequencyUnit(frequencyDisplay,currentFrequencyUnit);
+updateRazText();
+calculateAutomation();
+
+})();
+</script>
+</body></html>
